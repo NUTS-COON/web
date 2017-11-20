@@ -1,9 +1,9 @@
 def app(environ, start_response):
 
     string = environ["QUERY_STRING"].split('&')
-    data = []
+    data = ""
     for i in string:
-        data.append(i + '\n')    
+        data = data + i + "\n"    
      
     status = '200 OK'
     response_headers = [
@@ -11,4 +11,4 @@ def app(environ, start_response):
         ('Content-Length', str(len(data)))
     ]
     start_response(status, response_headers)
-    return data
+    return [bytes(data, 'ascii')]
