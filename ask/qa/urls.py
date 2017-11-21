@@ -1,3 +1,4 @@
 from views import test
+from django.conf.urls import url, include
 
-urlpatterns = patterns('views', url(r'^$', test))
+urlpatterns = ['views', url(r'^$', include(test))]
