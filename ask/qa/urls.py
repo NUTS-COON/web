@@ -1,4 +1,5 @@
-from views import test
+from qa.views import test
 from django.conf.urls import url, include
+#from django.conf.urls.defaults import *
 
-urlpatterns = ['views', url(r'^$', include(test))]
+urlpatterns = [url(r'^$', test)]
