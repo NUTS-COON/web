@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{{ title }} questions</title>
+</head>
+<body>
+    <h1>{{ title }} questions</h1>
+    {% for q in questions %}
+        <li>
+            {{ q.title }}
+            <p><a href="{{ q.get_url }}">{{ q }}, {{ q.author_id }}</a></p>
+    {% endfor %}
