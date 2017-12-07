@@ -52,7 +52,8 @@ def popular(request, *args, **kwargs):
                    'paginator': paginator,
                    'limit':     limit,
                    })
-@require_GET
+
+
 def question(request, num):
     question = get_object_or_404(Question, id=num)
     answers = question.answer_set.all()
