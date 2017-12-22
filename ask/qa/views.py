@@ -5,8 +5,11 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from models import Question, Answer 
-
+from django.http import Http404, HttpResponseRedirect
 from django.http import HttpResponse 
+from forms import AskForm, AnswerForm
+
+
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
 
@@ -56,11 +59,31 @@ def popular(request, *args, **kwargs):
 
 def question(request, num):
     question = get_object_or_404(Question, id=num)
-    answers = question.answer_set.all()
+    if request.method == 'POST':
+         form = AnswerForm(request.POST)
+         if form.is_valid():
+            form = form.save()
+            url = form.get_url()
+
+            return HttpResponseRedirect(url)
+    else:
+        form = AnswerForm(initial={'question': question.id})
+
     return render(request, 'question.html',
                   {'question': question,
-                   'answers':   answers,
+                   'answers':   form,
                   })
                  
+
+def ask(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = AskForm(request.POST)
+        if form.is_valid():
+            form = form.save()
+            url = form.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'ask.html',  {'form': form})
 
     

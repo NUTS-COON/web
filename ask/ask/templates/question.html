@@ -9,9 +9,18 @@
     <div>{{ question.text }}, {{ question.author_id }}</div>
     <hr>
     <ul>
-    {% for a in answers %}
-        <li>{{ answer }}, {{ answer.author_id }}</li>
+    {% for a in question.answer_set.all %}
+        <li>{{ a }}, {{ a.author_id }}</li>
     {% endfor %}
     </ul>
+     <hr>
+    <form method="post" action="{{ question.get_url }}">
+        <fieldset>
+{% csrf_token %}
+{{ form.as_p }}
+        </fieldset>
+        <button type="submit">Ответить</button>
+    </form>
+    <hr>
 </body>
 </html>
